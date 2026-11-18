@@ -1,0 +1,55 @@
+.venv/
+__pycache__/
+*.pyc
+data/*.db*
+backend-java/classes/
+.env
+*.log
+.qa/
+
+# Local credentials; keep only the empty configuration template.
+.env.*
+!.env.example
+*[aA][pP][iI][kK][eE][yY]*.csv
+*[cC][rR][eE][dD][eE][nN][tT][iI][aA][lL]*.csv
+*密钥*.csv
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Databases, including journals and recovery copies.
+*.db
+*.db-*
+*.db.*
+*.sqlite
+*.sqlite-*
+*.sqlite.*
+*.sqlite3
+*.sqlite3-*
+*.sqlite3.*
+
+# Local dependencies and generated files.
+venv/
+node_modules/
+*.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.tmp
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Archived UI and local verification artifacts.
+/frontend-powerpilot-backup/
+/data/logs/
+/data/docx-qa/
+/data/service-pids.json
+/data/device-demo-page.png
+/data/device-mobile.png
+/data/device-page.png
+
+# Keep data/market_daily.csv, virtual samples, map assets and vendor notices.

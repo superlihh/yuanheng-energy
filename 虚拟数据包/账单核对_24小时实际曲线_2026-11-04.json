@@ -1,0 +1,248 @@
+{
+  "planDate": "2026-11-04",
+  "socStartKwh": 400.0,
+  "socEndKwh": 400.0,
+  "executionEnergyKwh": 13120.91,
+  "actualIntervals": [
+    {
+      "hour": 0,
+      "price": 153.0,
+      "gridKw": 449.54,
+      "baselineGridKw": 449.54,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 1,
+      "price": 133.57,
+      "gridKw": 464.58,
+      "baselineGridKw": 464.58,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 2,
+      "price": 125.84,
+      "gridKw": 464.98,
+      "baselineGridKw": 464.98,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 3,
+      "price": 139.75,
+      "gridKw": 445.1,
+      "baselineGridKw": 445.1,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 4,
+      "price": 158.15,
+      "gridKw": 447.65,
+      "baselineGridKw": 447.65,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 5,
+      "price": 194.21,
+      "gridKw": 455.41,
+      "baselineGridKw": 455.41,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 6,
+      "price": 235.87,
+      "gridKw": 480.74,
+      "baselineGridKw": 480.74,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 7,
+      "price": 300.1,
+      "gridKw": 518.22,
+      "baselineGridKw": 518.22,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 8,
+      "price": 341.29,
+      "gridKw": 677.91,
+      "baselineGridKw": 677.91,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 9,
+      "price": 326.46,
+      "gridKw": 662.78,
+      "baselineGridKw": 662.78,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 10,
+      "price": 247.21,
+      "gridKw": 669.87,
+      "baselineGridKw": 669.87,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 11,
+      "price": 24.16,
+      "gridKw": 532.35,
+      "baselineGridKw": 532.35,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 12,
+      "price": 1.66,
+      "gridKw": 490.96,
+      "baselineGridKw": 490.96,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 13,
+      "price": 10.1,
+      "gridKw": 771.29,
+      "baselineGridKw": 621.29,
+      "chargeKw": 150.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 14,
+      "price": 94.63,
+      "gridKw": 782.83,
+      "baselineGridKw": 632.83,
+      "chargeKw": 150.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 15,
+      "price": 260.83,
+      "gridKw": 623.7,
+      "baselineGridKw": 623.7,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 16,
+      "price": 328.75,
+      "gridKw": 628.46,
+      "baselineGridKw": 628.46,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 17,
+      "price": 376.84,
+      "gridKw": 594.13,
+      "baselineGridKw": 594.13,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 18,
+      "price": 412.62,
+      "gridKw": 606.27,
+      "baselineGridKw": 606.27,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 19,
+      "price": 394.96,
+      "gridKw": 441.62,
+      "baselineGridKw": 579.62,
+      "chargeKw": 0.0,
+      "dischargeKw": 138.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 20,
+      "price": 348.59,
+      "gridKw": 433.99,
+      "baselineGridKw": 571.99,
+      "chargeKw": 0.0,
+      "dischargeKw": 138.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 21,
+      "price": 294.48,
+      "gridKw": 519.61,
+      "baselineGridKw": 519.61,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 22,
+      "price": 252.8,
+      "gridKw": 490.32,
+      "baselineGridKw": 490.32,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    },
+    {
+      "hour": 23,
+      "price": 208.85,
+      "gridKw": 468.6,
+      "baselineGridKw": 468.6,
+      "chargeKw": 0.0,
+      "dischargeKw": 0.0,
+      "contractKwh": 300,
+      "contractPrice": 350
+    }
+  ]
+}

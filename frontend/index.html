@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>源衡智控 · 工业企业源网荷储智能优化平台</title>
+<meta name="description" content="源衡智控面向工业企业提供端边云能源数据采集、生产约束建模、源网荷储优化和可解释AI辅助决策。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2306111d'/%3E%3Crect x='7' y='7' width='18' height='18' fill='none' stroke='%236bc9ef'/%3E%3Cpath d='M16 10v12M11 16h10' stroke='%236bc9ef'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/live.css">
+<link rel="stylesheet" href="css/operations.css">
+<link rel="stylesheet" href="css/assistant.css">
+</head>
+<body>
+<div class="auth-wall" id="auth-wall" aria-label="源衡智控工业能源智能优化平台登录">
+  <canvas class="auth-bg-canvas" id="auth-bg-canvas" aria-hidden="true"></canvas>
+  <svg class="auth-grid-art" viewBox="0 0 820 560" role="img" aria-label="中国电网输电线路示意图" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="auth-map-fill" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#183c58" stop-opacity=".72" />
+        <stop offset="1" stop-color="#0b263c" stop-opacity=".26" />
+      </linearGradient>
+      <linearGradient id="auth-line" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#5db7e8" stop-opacity=".15" />
+        <stop offset=".45" stop-color="#aee8ff" stop-opacity=".9" />
+        <stop offset="1" stop-color="#398dca" stop-opacity=".18" />
+      </linearGradient>
+      <filter id="auth-glow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="4" result="blur" />
+        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+      <filter id="auth-soft-glow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="12" />
+      </filter>
+      <pattern id="auth-map-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+        <path d="M28 0H0V28" fill="none" stroke="#7bc5ed" stroke-opacity=".10" stroke-width=".6" />
+      </pattern>
+    </defs>
+    <g class="auth-geo-map" id="auth-geo-map" aria-hidden="true"></g>
+    <g class="auth-transmission-lines">
+      <path d="M112 189C191 184 242 156 305 179S418 242 512 226 571 191 607 183" />
+      <path d="M164 126C213 169 255 215 319 239S418 258 478 296" />
+      <path d="M229 94C269 129 322 148 388 151S494 152 565 139" />
+      <path d="M178 246C237 229 278 196 337 189S447 201 529 281" />
+      <path d="M282 73C302 113 313 159 305 179S286 258 270 294" />
+    </g>
+    <g class="auth-energy-flows">
+      <path d="M112 189C191 184 242 156 305 179S418 242 512 226 571 191 607 183" />
+      <path d="M164 126C213 169 255 215 319 239S418 258 478 296" />
+      <path d="M229 94C269 129 322 148 388 151S494 152 565 139" />
+    </g>
+    <g class="auth-nodes" filter="url(#auth-glow)">
+      <g><circle cx="112" cy="189" r="5" /><circle class="node-ring" cx="112" cy="189" r="12" /></g>
+      <g><circle cx="164" cy="126" r="5" /><circle class="node-ring" cx="164" cy="126" r="12" /></g>
+      <g><circle cx="229" cy="94" r="5" /><circle class="node-ring" cx="229" cy="94" r="12" /></g>
+      <g><circle cx="305" cy="179" r="6" /><circle class="node-ring" cx="305" cy="179" r="14" /></g>
+      <g><circle cx="388" cy="151" r="5" /><circle class="node-ring" cx="388" cy="151" r="12" /></g>
+      <g><circle cx="418" cy="258" r="5" /><circle class="node-ring" cx="418" cy="258" r="12" /></g>
+      <g><circle cx="512" cy="226" r="6" /><circle class="node-ring" cx="512" cy="226" r="14" /></g>
+      <g><circle cx="607" cy="183" r="5" /><circle class="node-ring" cx="607" cy="183" r="12" /></g>
+      <g><circle cx="478" cy="296" r="5" /><circle class="node-ring" cx="478" cy="296" r="12" /></g>
+    </g>
+  </svg>
+  <div class="auth-wall-copy">
+    <div class="auth-brand-lockup">
+      <div class="auth-brand-mark" aria-hidden="true"></div>
+      <div class="auth-brand-txt">
+        <div class="auth-brand-name">源衡智控</div>
+        <div class="auth-brand-sub">SOURCE · GRID · LOAD · STORAGE</div>
+        <div class="auth-brand-meta">工业企业源网荷储智能优化与AI辅助决策</div>
+        <div class="auth-brand-coord"><i></i>GRID STATUS · ONLINE · 24 / 7</div>
+      </div>
+    </div>
+  </div>
+  <div class="auth-wall-card">
+    <div class="micro">源衡智控 · 工业能源决策平台</div>
+    <h2 id="live-auth-title">登录源衡智控</h2>
+    <p id="live-auth-subtitle">登录后查看端边云数据、生产约束和源网荷储方案。</p>
+    <form id="live-auth-form">
+      <label>用户名<input id="live-username" name="username" autocomplete="username" minlength="2" maxlength="40" required placeholder="输入用户名"></label>
+      <label id="live-email-row" hidden>邮箱<input id="live-email" name="email" type="email" autocomplete="email" placeholder="name@company.com"></label>
+      <label>密码<input id="live-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required placeholder="至少 8 个字符"></label>
+      <div class="live-auth-captcha-row">
+        <label>安全验证<input id="live-captcha" name="captcha" inputmode="numeric" autocomplete="off" maxlength="4" required placeholder="输入右侧验证码"></label>
+        <button class="live-captcha-code" id="live-captcha-code" type="button" aria-label="刷新验证码" title="刷新验证码">----</button>
+      </div>
+      <div class="live-auth-options">
+        <label class="live-check"><input id="live-remember" type="checkbox"><span>记住账号</span></label>
+        <button class="live-forgot" id="live-forgot" type="button">忘记密码</button>
+      </div>
+      <button class="btn btn-primary" id="live-auth-submit" type="submit">登录</button>
+      <p class="live-auth-error" id="live-auth-error" role="alert"></p>
+    </form>
+    <button class="live-auth-switch" id="live-auth-switch" type="button">还没有账号？创建企业空间</button>
+    <p class="live-auth-note"><span>授权用户访问 · 企业数据隔离</span><span>云边协同 · v1.0.0</span></p>
+  </div>
+</div>
+<div class="live-session" id="live-session" hidden><span class="dot live"></span><span id="live-session-text">后端数据同步中</span></div>
+<a class="skip-link" href="#main">跳至内容</a>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+      <div class="logo-mark" aria-hidden="true"><i></i></div>
+      <div class="brand-txt">
+        <div class="logo-name">源衡智控</div>
+        <div class="logo-sub">YUANHENG · SOURCE-GRID-LOAD-STORAGE</div>
+      </div>
+    </div>
+    <div class="rail-caption">工业企业源网荷储决策台<br>端边云协同 · 华为ICT创新赛道</div>
+
+     <nav class="nav" aria-label="主导航">
+       <a href="#overview" data-view="overview" class="active"><span class="idx">01</span><span class="nav-label">开始使用</span><span class="nav-dot"></span></a>
+       <a href="#data" data-view="data"><span class="idx">02</span><span class="nav-label">导入数据</span><span class="nav-dot"></span></a>
+       <a href="#operations" data-view="operations"><span class="idx">03</span><span class="nav-label">运行分析</span><span class="nav-dot"></span></a>
+       <a href="#assistant" data-view="assistant"><span class="idx">04</span><span class="nav-label">智能问答</span><span class="nav-dot"></span></a>
+       <a href="#compare" data-view="compare"><span class="idx">05</span><span class="nav-label">优化方案</span></a>
+       <a href="#review" data-view="review"><span class="idx">06</span><span class="nav-label">审核复盘</span></a>
+       <details class="nav-more-tools"><summary>更多功能</summary><div>
+         <a href="#devices" data-view="devices"><span class="idx">07</span><span class="nav-label">企业与产线</span></a>
+         <a href="#terminal" data-view="terminal"><span class="idx">08</span><span class="nav-label">预测分析</span></a>
+         <a href="#schedule" data-view="schedule"><span class="idx">09</span><span class="nav-label">时序排程</span></a>
+         <a href="#alerts" data-view="alerts"><span class="idx">10</span><span class="nav-label">预警中心</span><span class="nav-badge" id="nav-alert-count">7</span></a>
+         <a href="#longterm" data-view="longterm"><span class="idx">11</span><span class="nav-label">长期规划</span></a>
+         <a href="#governance" data-view="governance"><span class="idx">12</span><span class="nav-label">数据治理</span></a>
+       </div></details>
+     </nav>
+
+    <div class="rail-foot">
+      <div class="rail-meta"><span>试点企业</span><strong>晋阳新材料 · 一号厂区</strong></div>
+      <div class="rail-meta"><span>计量点</span><strong>山西 · 太原 / MP-1400127</strong></div>
+      <div class="rail-status"><span class="dot live"></span>数据冻结 · 03-04 03:42</div>
+      <div class="rail-ver">PROTOTYPE v0.9 / SHANXI SPOT</div>
+    </div>
+  </aside>
+
+  <div class="main" id="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="crumb">决策控制台</span>
+        <span class="topbar-sep"></span>
+        <span class="crumb dim">规划日 2026-03-04 · 周三</span>
+      </div>
+      <div class="topbar-right">
+        <button class="cmd-btn" id="cmd-open" aria-label="打开指令台，快捷键 Ctrl 或 Command 加 K">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+          <span>指令台</span><kbd>⌘K</kbd>
+        </button>
+        <span class="status-chip" title="数据最后采集时间"><i class="dot live"></i>数据新鲜 03:42</span>
+        <span class="batch-chip" title="当前冻结数据批次">B-20260303-MKT-02</span>
+        <button class="icon-btn" id="bell" aria-label="查看预警">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9a6 6 0 1 1 12 0c0 4 1.4 5.6 2 6H4c.6-.4 2-2 2-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          <span class="badge-dot">3</span>
+        </button>
+        <div class="user">
+          <span class="avatar">李</span>
+          <span class="user-txt"><strong>李杰男</strong><small>审核负责人</small></span>
+        </div>
+        <button class="icon-btn live-logout" id="logout-btn" aria-label="退出当前企业空间" title="退出当前企业空间">↪</button>
+      </div>
+    </header>
+
+    <main id="stage">
+
+      <!-- ================= 01 OVERVIEW ================= -->
+      <section class="view active" id="view-operations" aria-labelledby="ops-title">
+        <header class="view-head operations-head reveal">
+          <div>
+           <div class="micro">ENTERPRISE ENERGY · LIVE ANALYSIS</div>
+           <h1 id="ops-title">企业用能运行分析</h1>
+           <p class="lede">查看已导入的负荷、电价、生产和储能数据。没有导入数据时，系统只显示待导入状态，不生成虚构指标。</p>
+          </div>
+          <div class="head-actions ops-head-actions">
+            <span class="tag tag-info" id="ops-freshness">数据同步中</span>
+            <button class="btn btn-ghost btn-sm" id="ops-refresh" type="button" title="刷新当前态势">↻ 刷新</button>
+            <button class="btn btn-ghost btn-sm" type="button" data-goto="devices" data-open-profile-settings title="打开计量点和费用口径设置">用能设置</button>
+            <label class="ops-toggle"><input id="ops-polling" type="checkbox" checked><span>自动刷新</span></label>
+          </div>
+        </header>
+
+        <section class="ops-filters panel reveal" aria-label="运行态势筛选">
+          <div class="ops-filter-field"><label for="ops-region">区域</label><select id="ops-region"><option value="全国">全国</option><option>华北</option><option>华东</option><option>华中</option><option>西北</option><option>西南</option><option>东北</option></select></div>
+          <div class="ops-filter-field"><label for="ops-time">时间范围</label><select id="ops-time"><option value="today">今日 · 15 分钟</option><option value="day">近 24 小时</option><option value="week">近 7 天</option><option value="month">近 30 天</option></select></div>
+          <div class="ops-filter-field"><label for="ops-device">设备</label><select id="ops-device"><option value="all">全部设备</option><option value="line">输电线路</option><option value="station">变电站</option><option value="storage">储能设备</option><option value="load">企业负荷</option></select></div>
+          <div class="ops-filter-field"><label for="ops-metric">指标</label><select id="ops-metric"><option value="load">负荷 / 供需</option><option value="flow">线路负载率</option><option value="price">市场价格</option><option value="carbon">碳排放</option><option value="quality">数据质量</option></select></div>
+          <div class="ops-filter-search"><label for="ops-search">快速查找</label><input id="ops-search" type="search" placeholder="搜索区域、线路或设备"></div>
+          <button class="btn btn-primary ops-filter-apply" id="ops-apply" type="button">应用筛选</button>
+        </section>
+
+        <section class="ops-kpis reveal" aria-label="关键指标">
+          <article class="ops-kpi"><span class="micro">实时总负荷</span><strong id="ops-kpi-load">—</strong><small>GW · 全国监测口径</small><em id="ops-kpi-load-trend">—</em></article>
+          <article class="ops-kpi"><span class="micro">供需平衡度</span><strong id="ops-kpi-balance">—</strong><small>备用容量 / 需求</small><em class="good">安全区间</em></article>
+          <article class="ops-kpi"><span class="micro">线路高负载</span><strong id="ops-kpi-lines">—</strong><small>条 · 负载率 ≥ 80%</small><em class="warn">需关注</em></article>
+          <article class="ops-kpi"><span class="micro">活动告警</span><strong id="ops-kpi-alerts">—</strong><small>项 · 已接入处置闭环</small><em id="ops-kpi-alert-status">—</em></article>
+          <article class="ops-kpi"><span class="micro">清洁能源占比</span><strong id="ops-kpi-renewable">—</strong><small>风光水储综合</small><em class="good">趋势稳定</em></article>
+        </section>
+
+        <section class="panel energy-summary-panel reveal" id="energy-summary-panel" aria-label="每日和每月用能统计">
+          <div class="panel-head compact">
+            <div><div class="micro">ENERGY ACCOUNTING · IMPORTED DATA</div><h2>每日 / 每月用能统计</h2></div>
+            <button class="btn btn-primary btn-sm" type="button" data-goto="devices" data-open-profile-settings>设置计量点与费用口径</button>
+          </div>
+          <div class="energy-summary-grid" id="energy-summary-grid">
+            <div class="energy-summary-kpi"><span>今日用电量</span><strong>—</strong><small>等待企业小时数据</small></div>
+            <div class="energy-summary-kpi"><span>本月用电量</span><strong>—</strong><small>等待企业小时数据</small></div>
+            <div class="energy-summary-kpi"><span>今日分析费用</span><strong>—</strong><small>非正式结算</small></div>
+            <div class="energy-summary-kpi"><span>本月分析费用</span><strong>—</strong><small>非正式结算</small></div>
+            <div class="energy-summary-kpi"><span>统计峰值负荷</span><strong>—</strong><small>导入数据口径</small></div>
+            <div class="energy-summary-kpi"><span>已统计小时</span><strong>—</strong><small>按小时记录累计</small></div>
+          </div>
+          <div class="energy-summary-tables">
+            <div><div class="energy-summary-subhead"><strong>最近日统计</strong><span>用电量 · 分析费用 · 峰值</span></div><div class="table-wrap"><table class="data-table energy-summary-table" id="energy-summary-daily"><tbody><tr><td>暂无企业导入数据</td></tr></tbody></table></div></div>
+            <div><div class="energy-summary-subhead"><strong>最近月统计</strong><span>按自然月汇总</span></div><div class="table-wrap"><table class="data-table energy-summary-table" id="energy-summary-monthly"><tbody><tr><td>暂无企业导入数据</td></tr></tbody></table></div></div>
+          </div>
+          <div class="energy-summary-meta" id="energy-summary-meta">数据来源：等待企业导入小时数据 · 费用仅用于分析，不替代正式账单结算。</div>
+        </section>
+
+        <div class="ops-layout reveal">
+          <section class="panel ops-map-panel">
+            <div class="panel-head compact"><div><div class="micro">GRID MAP · INTERACTIVE</div><h2>全国电网与能源节点</h2></div><div class="ops-map-legend"><span><i class="legend-node normal"></i>正常</span><span><i class="legend-node warn"></i>关注</span><span><i class="legend-node danger"></i>告警</span></div></div>
+            <div class="ops-map-toolbar"><span id="ops-map-scope">全国 · 运行总览</span><div><button type="button" class="icon-btn" id="ops-map-zoom-in" aria-label="放大地图">＋</button><button type="button" class="icon-btn" id="ops-map-zoom-out" aria-label="缩小地图">−</button><button type="button" class="icon-btn" id="ops-map-reset" aria-label="重置地图">⌂</button></div></div>
+            <div class="ops-map" id="ops-map" role="img" aria-label="全国电网节点和输电线路地图"></div>
+            <div class="ops-map-foot"><span id="ops-map-source">拓扑图层：演示拓扑，等待接入企业 GIS / SCADA</span><span id="ops-map-updated">更新时间 —</span></div>
+          </section>
+
+          <aside class="ops-side-stack">
+            <section class="panel ops-ai-card ai-conclusion"><div class="panel-head compact"><div><div class="micro">AI ANALYSIS · 结论</div><h2>运行态势结论</h2></div><span class="tag tag-info" id="ops-ai-confidence">置信度 —</span></div><p id="ops-ai-conclusion">正在读取当前区域、负荷和告警数据。</p><div class="ops-card-meta"><span>分析范围 <strong id="ops-ai-scope">全国 / 今日</strong></span><span>数据新鲜度 <strong id="ops-ai-fresh">—</strong></span></div></section>
+            <section class="panel ops-ai-card ai-risk"><div class="panel-head compact"><div><div class="micro">AI RISK · 风险</div><h2>风险提示</h2></div><span class="tag tag-warn">人工复核</span></div><ul id="ops-risk-list" class="ops-bullet-list"></ul><button class="link ops-detail-link" type="button" data-ops-action="risk">查看风险依据 →</button></section>
+            <section class="panel ops-ai-card ai-recommend"><div class="panel-head compact"><div><div class="micro">AI RECOMMEND · 建议</div><h2>建议动作</h2></div><span class="tag tag-lime">辅助决策</span></div><p id="ops-ai-recommendation">—</p><div class="ops-card-actions"><button class="btn btn-primary btn-sm" type="button" data-goto="assistant">进入智能问答</button><button class="btn btn-ghost btn-sm" type="button" data-ops-action="create-task">创建任务</button><button class="btn btn-ghost btn-sm" type="button" data-ops-action="favorite">收藏分析</button></div></section>
+          </aside>
+        </div>
+
+        <div class="ops-lower-grid reveal">
+          <section class="panel"><div class="panel-head compact"><div><div class="micro">EVENT TIMELINE</div><h2>事件时间轴</h2></div><button class="btn btn-quiet btn-sm" type="button" data-ops-action="export">导出结果</button></div><div class="ops-timeline" id="ops-timeline"></div></section>
+          <section class="panel"><div class="panel-head compact"><div><div class="micro">ACTIVE EVENTS</div><h2>异常事件</h2></div><span class="tag tag-danger" id="ops-event-count">—</span></div><div class="ops-event-list" id="ops-event-list"></div></section>
+          <section class="panel"><div class="panel-head compact"><div><div class="micro">DATA EVIDENCE</div><h2>数据依据</h2></div><button class="btn btn-quiet btn-sm" type="button" data-ops-action="save-query">保存查询</button></div><div class="ops-evidence" id="ops-evidence"></div></section>
+        </div>
+      </section>
+
+      <section class="view" id="view-assistant" aria-labelledby="assistant-title">
+        <header class="view-head reveal assistant-head">
+            <div><div class="micro">SOURCE · GRID · LOAD · STORAGE · AI</div><h1 id="assistant-title">源衡智控能源智能问答</h1><p class="lede">直接询问生产负荷、电价、设备、储能和源网荷储方案。回答会显示数据依据、统计粒度、时间范围和置信度，建议动作必须经过人工确认。</p></div>
+          <div class="head-actions"><span class="tag tag-info" id="assistant-status">已连接当前企业数据</span><button class="btn btn-ghost btn-sm" id="assistant-new" type="button">＋ 新建会话</button></div>
+        </header>
+
+        <div class="assistant-shell reveal">
+          <aside class="assistant-sessions panel">
+            <div class="assistant-panel-head"><strong>历史会话</strong><button class="icon-btn" id="assistant-session-search" type="button" aria-label="搜索会话">⌕</button></div>
+            <div class="assistant-session-list" id="assistant-session-list"></div>
+            <div class="assistant-session-foot"><span class="dot live"></span><span>仅显示当前企业空间</span></div>
+          </aside>
+
+          <section class="assistant-main panel">
+             <div class="assistant-chat-head"><div class="ai-mark" aria-hidden="true"><span></span></div><div><strong>源衡智控能源分析助手</strong><small>先导入 CSV，再询问负荷、价格、成本和储能</small></div><div class="assistant-chat-tools"><button class="icon-btn" id="assistant-stop" type="button" aria-label="停止生成" title="停止生成" disabled>■</button><button class="icon-btn" id="assistant-search" type="button" aria-label="搜索会话" title="搜索会话">⌕</button></div><span class="tag tag-lime">权限范围内</span></div>
+            <div class="assistant-context-strip" id="assistant-context-strip"><span>区域：<b data-assistant-context="region">全国</b></span><span>时间：<b data-assistant-context="time">今日</b></span><span>指标：<b data-assistant-context="metric">负荷</b></span><span>设备：<b data-assistant-context="device">全部</b></span><button class="link" id="assistant-clear-context" type="button">清空条件</button></div>
+            <div class="assistant-messages" id="assistant-messages" aria-live="polite"></div>
+            <div class="assistant-suggestions" id="assistant-suggestions"></div>
+            <form class="assistant-composer" id="assistant-form">
+              <button class="assistant-attach" id="assistant-attach" type="button" aria-label="上传文件" title="上传 CSV、Excel、PDF、图片或表格">＋</button>
+              <input id="assistant-file" type="file" accept=".csv,.xlsx,.xls,.pdf,.png,.jpg,.jpeg" hidden>
+               <input id="assistant-input" type="text" autocomplete="off" placeholder="例如：分析近7天负荷趋势，并指出最高负荷时段">
+              <button class="assistant-voice" id="assistant-voice" type="button" aria-label="语音输入" title="语音输入">◉</button>
+              <button class="btn btn-primary" type="submit">发送</button>
+            </form>
+            <div class="assistant-upload-preview" id="assistant-upload-preview" hidden></div>
+            <div class="assistant-foot"><span>分析只读当前授权数据</span><span>不直接控制设备或提交调度指令</span><span id="assistant-typing-status"></span></div>
+          </section>
+
+          <aside class="assistant-context panel">
+            <div class="panel-head compact"><div><div class="micro">ANALYSIS CONTEXT</div><h2>当前分析上下文</h2></div></div>
+            <div class="assistant-context-card"><span>区域</span><strong data-assistant-context="region">全国</strong><small>可在对话中说“只看华东”</small></div>
+            <div class="assistant-context-card"><span>时间范围</span><strong data-assistant-context="time">今日</strong><small>支持今天、昨日、近7天、近30天</small></div>
+            <div class="assistant-context-card"><span>数据来源</span><strong>企业数据 + 市场数据</strong><small>设备、告警、指标和历史批次</small></div>
+            <div class="assistant-context-card"><span>回答规则</span><strong>数据与判断分开</strong><small>推测会标注可能性和置信度</small></div>
+            <div class="assistant-source-list"><div class="micro">可用数据域</div><span>实时负荷</span><span>历史用电</span><span>线路与设备</span><span>预警与事件</span><span>价格与新能源</span><span>企业导入文件</span></div>
+             <div class="assistant-help"><strong>不知道怎么问？</strong><p>先导入数据，再试试“分析近7天负荷趋势”“哪一天用电量最高？”或“生成数据摘要”。</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-overview" aria-labelledby="ov-title">
+        <section class="data-required-banner panel reveal" id="data-required-banner" aria-live="polite">
+          <div class="data-required-icon">01</div>
+          <div><strong>还没有可分析的企业数据</strong><p>先上传 CSV（必填：timestamp、price_yuan_mwh、load_kw），导入成功后系统会自动刷新负荷、价格、成本和优化结果。</p></div>
+          <button class="btn btn-primary btn-sm" type="button" data-open-import>上传用电数据</button>
+          <button class="btn btn-quiet btn-sm" type="button" data-load-demo>先看演示</button>
+        </section>
+        <div class="masthead reveal">
+          <div class="masthead-main">
+            <div class="eyebrow"><span class="sq"></span>PLANNING DAY · 2026.03.04 · 96 × 15 MIN</div>
+            <h1 class="display" id="ov-title">把最贵的 2.4 小时，<br><em>挪到午后。</em></h1>
+            <p class="lede">在冻结的价格预测、合同曲线与生产约束内重新求解：2# 轧机移至 12:30–16:30，储能午间充电、晚峰放电。推荐 S4 组合方案，模拟成本低于基准 <span class="text-lime">¥18,640</span>。</p>
+          </div>
+          <div class="hero-save">
+            <div class="micro">S4 · 组合方案 · 模拟差额</div>
+            <div class="big-num" data-count="18640" data-prefix="+¥">+¥18,640</div>
+            <div class="hero-sub"><span class="text-lime">▼ 3.8%</span> 对比基准 S0 · 口径：模拟成本</div>
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-goto="compare">查看五方案 <span aria-hidden="true">→</span></button>
+              <button class="btn btn-ghost" id="export-btn">导出决策报告</button>
+            </div>
+            <div class="hero-note"><span class="mini-dot"></span>不是实际节省 · 需正式账单与反事实基准核验</div>
+          </div>
+        </div>
+
+        <section class="quick-start-console reveal" aria-label="快速试用流程"><div class="quick-start-copy"><div class="micro">QUICK START</div><h2>四步看懂企业用电优化</h2><p>系统先核对数据和生产边界，再给出可审核的移峰、储能和购电建议；不会直接替企业下单或控制设备。</p></div><div class="quick-start-actions"><button class="quick-start-action primary" type="button" data-open-import><span>01</span><strong>上传用电数据</strong><small>CSV：时间、价格、负荷</small></button><button class="quick-start-action" type="button" data-goto="devices"><span>02</span><strong>填写设备约束</strong><small>产线、储能、可调时段</small></button><button class="quick-start-action" type="button" data-goto="compare"><span>03</span><strong>查看成本方案</strong><small>移峰、储能、合同组合</small></button><button class="quick-start-action" type="button" data-goto="review"><span>04</span><strong>人工审核复盘</strong><small>确认后再执行与核验</small></button></div><div class="quick-start-footer"><span>没有企业数据？</span><button class="link" type="button" data-load-demo>先加载 21 天演示数据 →</button></div></section>
+
+        <div class="kpi-row reveal">
+          <div class="kpi">
+            <div class="micro">日前预测均价</div>
+            <div class="kpi-num"><span id="kpi-avg-price">402.8</span><small>元 / MWh</small></div>
+            <div class="kpi-sub"><span class="up">▲ 6.4%</span> 对比昨日同口径</div>
+          </div>
+          <div class="kpi">
+            <div class="micro">晚峰最高价</div>
+            <div class="kpi-num"><span id="kpi-max-price">942</span><small>元 / MWh</small></div>
+            <div class="kpi-sub"><span id="kpi-max-time">19:30</span> · 误差带 <span class="warn">+38%</span></div>
+          </div>
+          <div class="kpi">
+            <div class="micro">预测负荷峰值</div>
+            <div class="kpi-num"><span id="kpi-peak-load">64.6</span><small>MW</small></div>
+            <div class="kpi-sub"><span id="kpi-peak-time">19:30</span> · 并网上限 74 MW</div>
+          </div>
+          <div class="kpi">
+            <div class="micro">中长期合同覆盖率</div>
+            <div class="kpi-num"><span>68.4</span><small>%</small></div>
+            <div class="kpi-sub">现货敞口 31.6% · 合同 v4</div>
+          </div>
+        </div>
+
+        <div class="overview-grid">
+          <div class="panel price-panel reveal">
+            <div class="panel-head">
+              <div>
+                <div class="micro">DAY-AHEAD × LOAD</div>
+                <h2>明日分时价格与负荷</h2>
+              </div>
+              <div class="chart-tools" id="price-layers" role="group" aria-label="图表图层">
+                <button class="chip active" data-layer="price" aria-pressed="true">价格</button>
+                <button class="chip active" data-layer="load" aria-pressed="true">负荷</button>
+                <button class="chip active" data-layer="band" aria-pressed="true">误差带</button>
+                <button class="chip active" data-layer="windows" aria-pressed="true">动作窗口</button>
+              </div>
+            </div>
+            <div class="chart-legend">
+              <span class="legend-item"><i class="sw sw-amber"></i>日前预测价格 <small>元/MWh</small></span>
+              <span class="legend-item"><i class="sw sw-steel"></i>预测负荷 <small>MW</small></span>
+              <span class="legend-item"><i class="sw sw-lime"></i>低价 / 充电窗口</span>
+              <span class="legend-item"><i class="sw sw-red"></i>晚峰风险窗口</span>
+            </div>
+            <div class="chart-wrap" id="price-chart">
+              <div class="chart-tip" id="price-tip" hidden></div>
+            </div>
+            <div class="panel-foot">
+              <span>预测值 · GBT v2.4.0 / BLEND v2.4.0 · 回测 MAPE <span id="overview-mape">5.6%</span> / 3.1%</span>
+              <button class="link" data-goto="terminal">进入价格预测行情 →</button>
+            </div>
+          </div>
+
+          <aside class="side-stack">
+            <div class="panel action-panel reveal">
+              <div class="panel-head">
+                <div><div class="micro">ACTION WINDOWS</div><h2>明日动作窗口</h2></div>
+                <span class="tag tag-lime">S4 草案 v3</span>
+              </div>
+              <ul class="action-list">
+                <li>
+                  <div class="time">12:00–15:00</div>
+                  <div class="act"><strong>储能充电</strong><span>7 MW · 21 MWh · 均价 ¥231</span></div>
+                  <i class="act-mark mark-charge" aria-hidden="true"></i>
+                </li>
+                <li>
+                  <div class="time">12:30–16:30</div>
+                  <div class="act"><strong>2# 轧机移峰</strong><span>3.2 MW · 贡献 ¥6,180</span></div>
+                  <i class="act-mark mark-shift" aria-hidden="true"></i>
+                </li>
+                <li>
+                  <div class="time">18:00–20:00</div>
+                  <div class="act"><strong>储能放电</strong><span>7 MW · 覆盖晚峰 14 MWh</span></div>
+                  <i class="act-mark mark-discharge" aria-hidden="true"></i>
+                </li>
+                <li>
+                  <div class="time">13:45</div>
+                  <div class="act"><strong>并网峰值收紧</strong><span>70.3 / 74 MW · 余量 3.7 MW</span></div>
+                  <i class="act-mark mark-warn" aria-hidden="true"></i>
+                </li>
+              </ul>
+              <div class="panel-foot"><span>仅输出满足硬约束的候选</span><button class="link" data-goto="schedule">查看排程 →</button></div>
+            </div>
+
+            <div class="panel alert-mini reveal" id="alert-mini"></div>
+
+            <div class="panel data-mini reveal">
+              <div class="panel-head compact">
+                <div><div class="micro">DATA FRESHNESS</div><h2>数据状态</h2></div>
+                <button class="link" data-goto="data">全部批次 →</button>
+              </div>
+              <ul class="data-list" id="overview-batches"></ul>
+            </div>
+          </aside>
+        </div>
+
+        <div class="panel scheme-strip reveal">
+          <div class="panel-head">
+            <div><div class="micro">SCENARIO LADDER · S0–S4</div><h2>五方案速览</h2></div>
+            <button class="link" data-goto="compare">完整比较 →</button>
+          </div>
+          <div id="scheme-strip"></div>
+          <div class="panel-foot">
+            <span>所有金额为同一规划日、同一批次、同一约束集下的模拟成本</span>
+            <span>组合方案独立求解，未将单项差额相加</span>
+          </div>
+        </div>
+
+        <div class="principles reveal" aria-label="计算口径">
+          <span>空值 ≠ 0</span><i></i><span>模拟差额 ≠ 实际节省</span><i></i><span>actualSaving 待正式账单核验</span><i></i><span>重新优化生成新版本</span>
+        </div>
+
+        <section class="decision-loop panel reveal" id="decision-loop" aria-labelledby="decision-loop-title">
+          <div class="panel-head">
+            <div><div class="micro">DECISION LOOP · EXIT CONDITIONS</div><h2 id="decision-loop-title">当前决策闭环</h2></div>
+            <span class="tag tag-neutral" id="decision-loop-mode">等待后端同步</span>
+          </div>
+          <p class="decision-loop-intro" id="decision-loop-intro">系统会按数据、账单、方案、预警和复盘的先后顺序判断下一步动作。</p>
+          <div class="loop-track" id="decision-loop-track"></div>
+          <div class="loop-next" id="decision-loop-next">
+            <div><span class="micro">NEXT ACTION</span><strong>正在读取企业状态…</strong><small>完成当前动作后，系统会重新计算闭环状态。</small></div>
+            <button class="btn btn-ghost btn-sm" type="button" data-goto="data">查看入口 →</button>
+          </div>
+        </section>
+      </section>
+
+      <!-- ================= 02 FORECAST TERMINAL ================= -->
+      <section class="view" id="view-terminal" aria-labelledby="term-title">
+        <div class="term-pagehead reveal">
+          <div class="term-ident">
+            <div class="eyebrow"><span class="sq"></span>02 / FORECAST TERMINAL · 96 × 15 MIN</div>
+            <div class="term-title-row">
+              <h1 class="term-title" id="term-title">日前价格预测</h1>
+              <span class="term-code">D+1</span>
+            </div>
+            <div class="term-tags">
+              <span class="tag tag-neutral">山西现货</span>
+              <span class="tag tag-neutral">晋阳新材料 · MP-1400127</span>
+              <span class="tag tag-lime">预测值</span>
+              <span class="tag tag-neutral">PRICE-GBT v2.4.0</span>
+              <span class="tag tag-neutral">B-20260303-MKT-02</span>
+            </div>
+          </div>
+
+          <div class="term-quote-block">
+            <div class="tqb-top">
+              <span id="term-quote-time">最新预测 · 19:00</span>
+              <span class="term-ud"><i class="ud-up"></i>红涨 <i class="ud-down"></i>绿跌</span>
+            </div>
+            <div class="tqb-price">
+              <span id="term-last" class="t-up">886</span><small>元/MWh</small>
+              <em id="term-chg" class="t-up">+7.1%</em>
+            </div>
+            <div class="tqb-delta">较上一时段 <b id="term-delta">+58.9</b> 元/MWh</div>
+          </div>
+
+          <div class="term-stats">
+            <div><span>全日最高</span><b id="term-high">920</b><small id="term-high-time">19:15</small></div>
+            <div><span>全日最低</span><b id="term-low">208</b><small id="term-low-time">13:30</small></div>
+            <div><span>日均预测</span><b id="term-avg">405.4</b><small>元/MWh</small></div>
+            <div><span>晚峰误差带</span><b id="term-band">±35%</b><small>18–21 时</small></div>
+            <div><span>负荷峰值</span><b id="term-loadpeak">64.8</b><small>MW</small></div>
+            <div><span>回测样本</span><b>90</b><small>天</small></div>
+          </div>
+
+          <div class="term-head-actions">
+            <button class="btn btn-ghost btn-sm" data-goto="compare">查看五方案</button>
+            <button class="btn btn-primary btn-sm" id="term-export">导出行情</button>
+          </div>
+        </div>
+
+        <div class="terminal-grid">
+          <div class="panel term-panel reveal">
+            <div class="term-tabbar" id="term-modes" role="tablist" aria-label="主图周期">
+              <button class="term-tab active" data-fmode="line" role="tab" aria-selected="true">分时</button>
+              <button class="term-tab" data-fmode="candle" role="tab" aria-selected="false">时段K</button>
+              <button class="term-tab" data-fmode="band" role="tab" aria-selected="false">误差带</button>
+              <button class="term-tab" data-fmode="backtest" role="tab" aria-selected="false">回测</button>
+              <span class="term-tab-space"></span>
+              <span class="term-tab-note">价格 元/MWh · 预测值</span>
+              <span class="term-ud"><i class="ud-up"></i>涨 <i class="ud-down"></i>跌</span>
+            </div>
+            <div class="chart-wrap term-chart-wrap" id="term-chart">
+              <div class="chart-tip" id="term-tip" hidden></div>
+            </div>
+
+            <div class="term-tabbar sub" id="term-overlays" role="tablist" aria-label="副图指标">
+              <button class="term-tab active" data-overlay="load" role="tab" aria-selected="true">负荷</button>
+              <button class="term-tab" data-overlay="spread" role="tab" aria-selected="false">价差</button>
+              <button class="term-tab" data-overlay="soc" role="tab" aria-selected="false">SOC</button>
+              <button class="term-tab" data-overlay="margin" role="tab" aria-selected="false">并网余量</button>
+              <span class="term-tab-space"></span>
+              <label class="term-check"><input type="checkbox" id="term-overlay-main"> 叠到主图</label>
+            </div>
+            <div class="chart-wrap term-sub-wrap" id="term-subchart"></div>
+            <div class="term-note" id="term-note">分时：预测价格与日均线；副图可切换负荷、价差、SOC 与并网余量。</div>
+          </div>
+
+          <aside class="terminal-side">
+            <div class="panel reveal">
+              <div class="panel-head compact">
+                <div><div class="micro">KEY WINDOWS</div><h2>关键窗口</h2></div>
+                <span class="tag tag-neutral">96 时段</span>
+              </div>
+              <ul class="term-windows" id="term-windows"></ul>
+              <div class="panel-foot"><span>窗口来自价格排序与约束检查</span><span>红涨绿跌</span></div>
+            </div>
+
+            <div class="panel reveal">
+              <div class="panel-head compact">
+                <div><div class="micro">FORECAST TAPE</div><h2>时段流水</h2></div>
+                <span class="tag tag-neutral">预测值</span>
+              </div>
+              <div class="term-tape" id="term-tape"></div>
+              <div class="panel-foot"><span>点击行聚焦时段</span><span>红涨绿跌</span></div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="term-errorbar reveal">
+          <div class="teb-label">
+            <div class="micro">FORECAST ERROR · 90D</div>
+            <div class="teb-title">模型回测</div>
+            <span class="tag tag-lime">在阈值内</span>
+          </div>
+          <div class="teb-metrics" id="term-errors"></div>
+          <div class="teb-note"><span>阈值由企业确认</span><span>非收益承诺</span></div>
+        </div>
+
+        <div class="term-statusbar reveal">
+          <span><i class="dot live"></i>数据冻结 · 03:42 · 96 × 15min</span>
+          <span>预测值 ≠ 结算价 · 单日结果不进入年度预算</span>
+          <span>OHLC：H/L 取误差带的 25%，仅用于展示不确定性</span>
+          <span>红涨绿跌（国内习惯）</span>
+        </div>
+      </section>
+
+      <!-- ================= 03 COMPARE ================= -->
+      <section class="view" id="view-compare" aria-labelledby="cmp-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>03 / SCENARIO COMPARISON</div>
+            <h1 id="cmp-title">五方案比较</h1>
+            <p class="lede">冻结同一规划日、数据批次、预测版本、费用范围与约束集，分别求解 S0–S4。差额为负时保留负号，组合方案独立计算。</p>
+          </div>
+          <div class="head-locks">
+            <span class="lock"><i></i>规划日 2026-03-04</span>
+            <span class="lock"><i></i>批次 B-20260303-MKT-02</span>
+            <span class="lock"><i></i>预测 v2.4.0</span>
+            <span class="lock"><i></i>约束集 P-2026-021</span>
+          </div>
+        </header>
+
+        <div class="scheme-cards reveal" id="scheme-cards"></div>
+
+        <div class="compare-grid">
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">COST COMPOSITION</div><h2>成本构成 · 同日同口径</h2></div>
+              <span class="unit-note">单位：元</span>
+            </div>
+            <div class="composition" id="composition"></div>
+            <div class="panel-foot">
+              <span>电能费 / 合同差额 / 储能损耗与寿命 / 固定运维 / 其他已确认费用</span>
+              <span>未纳入费用不计入差额</span>
+            </div>
+          </div>
+
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">SELECTED SCENARIO</div><h2 id="detail-name">S4 · 组合方案</h2></div>
+              <span class="tag tag-amber" id="detail-tag">推荐</span>
+            </div>
+            <div class="detail-body" id="scheme-detail"></div>
+          </div>
+        </div>
+
+        <div class="panel sensitivity-panel reveal">
+          <div class="panel-head">
+            <div><div class="micro">SENSITIVITY · PRICE &amp; LOAD</div><h2>价格与负荷敏感性</h2></div>
+            <div class="seg" id="sens-mode" role="group" aria-label="敏感性模式">
+              <button class="seg-btn active" data-mode="fixed">固定动作评估</button>
+              <button class="seg-btn" data-mode="reopt">重新优化评估</button>
+            </div>
+          </div>
+          <p class="sens-desc" id="sens-desc">保持已生成的工序、合同与储能动作不变，只替换价格或负荷，回答“预测错了会怎样”。</p>
+          <div class="table-wrap">
+            <table class="data-table" id="sensitivity-table"></table>
+          </div>
+          <div class="panel-foot">
+            <span>同一扰动同时作用于基准与候选；越限即标记不可执行</span>
+            <span>重新优化结果另存草案，不覆盖原批准版本</span>
+          </div>
+        </div>
+
+        <div class="panel decision-panel reveal">
+          <div class="panel-head">
+            <div><div class="micro">DECISION MATRIX · MULTI-CRITERIA</div><h2>推荐排序 · 不只按成本</h2></div>
+            <div class="seg" id="decision-mode" role="group" aria-label="推荐偏好"></div>
+          </div>
+          <p class="sens-desc" id="decision-desc"></p>
+          <div class="decision-summary" id="decision-summary"></div>
+          <div class="table-wrap">
+            <table class="data-table decision-table" id="decision-table"></table>
+          </div>
+          <div class="panel-foot">
+            <span>评分 0–100 · 成本分为 S0–S4 模拟差额归一化 · 点击行查看方案</span>
+            <span>S1 因交割曲线缺失不参与排序 · 推荐为候选，由负责人确认</span>
+          </div>
+        </div>
+
+        <div class="rules-note reveal">
+          <div class="micro">DATA-INSUFFICIENT RULES</div>
+          <p><strong>S1 中长期合同优先</strong>：仅具备固定合同曲线，当前只做合同差额分析，必须标注“合同量未优化”。交易产品资格与交割曲线缺失时，合同量优化显示 <span class="tag tag-neutral">数据不足</span>，金额保持为空，不以 0 替代。</p>
+        </div>
+      </section>
+
+      <!-- ================= 03 SCHEDULE ================= -->
+      <section class="view" id="view-schedule" aria-labelledby="sch-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>04 / UNIT SCHEDULE</div>
+            <h1 id="sch-title">96 时段时序排程</h1>
+            <p class="lede">价格、负荷、储能功率与 SOC 共用一条时间轴。工序只允许落在满足连续时长、交付窗口、班次与并网约束的候选时段。</p>
+          </div>
+          <div class="head-actions">
+            <button class="chip active" id="ghost-toggle" aria-pressed="true">对比原计划</button>
+            <span class="tag tag-lime">S4 · V-S4-003 · 审核中</span>
+          </div>
+        </header>
+
+        <div class="schedule-grid">
+          <div class="panel schedule-chart-panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">ENERGY STACK</div><h2>价格 · 负荷 · 储能 · SOC</h2></div>
+              <div class="chart-tools static-legend">
+                <span class="legend-item"><i class="sw sw-amber"></i>价格</span>
+                <span class="legend-item"><i class="sw sw-steel"></i>负荷</span>
+                <span class="legend-item"><i class="sw sw-lime"></i>储能 / SOC</span>
+              </div>
+            </div>
+            <div class="chart-wrap schedule-wrap" id="schedule-chart">
+              <div class="chart-tip" id="schedule-tip" hidden></div>
+            </div>
+            <div class="panel-foot">
+              <span>悬停时段查看功率、SOC 与并网余量</span>
+              <span>数据性质：日前预测 + 设备参数（BESS 铭牌值待复核）</span>
+            </div>
+          </div>
+
+          <aside class="side-stack schedule-side">
+            <div class="panel reveal" id="slot-detail">
+              <div class="panel-head compact">
+                <div><div class="micro">SLOT INSPECTOR</div><h2>时段检查器</h2></div>
+                <span class="mono-time" id="slot-time">19:00–19:15</span>
+              </div>
+              <div class="slot-metrics" id="slot-metrics"></div>
+              <div class="slot-action" id="slot-action"></div>
+            </div>
+
+            <div class="panel reveal">
+              <div class="panel-head compact">
+                <div><div class="micro">HARD CONSTRAINTS</div><h2>硬约束检查</h2></div>
+                <span class="tag tag-ok">6 / 6 通过</span>
+              </div>
+              <ul class="constraint-list">
+                <li><span class="ok">✓</span><div><strong>2# 轧机连续运行 ≥ 4h</strong><small>新窗口 12:30–16:30 · 4.0h</small></div></li>
+                <li><span class="ok">✓</span><div><strong>交付窗口 ≤ 23:00</strong><small>最晚完成 16:30</small></div></li>
+                <li><span class="ok">✓</span><div><strong>班次 08:00–20:00</strong><small>移峰窗口处于日班内</small></div></li>
+                <li><span class="ok">✓</span><div><strong>并网功率 ≤ 74 MW</strong><small>峰值 70.3 MW · 余量 3.7 MW</small></div></li>
+                <li><span class="ok">✓</span><div><strong>SOC 20%–90%</strong><small>区间 30%–86.4% · 末端 49.2%</small></div></li>
+                <li><span class="ok">✓</span><div><strong>04:00–06:00 检修禁充</strong><small>该时段储能功率为 0</small></div></li>
+              </ul>
+              <div class="panel-foot"><span>软约束 2 项 · 已转为惩罚项</span><span>无可行解时返回冲突，不伪造结果</span></div>
+            </div>
+
+            <div class="panel reveal bess-card">
+              <div class="panel-head compact">
+                <div><div class="micro">BESS · 40 MWh / 10 MW</div><h2>储能净收益</h2></div>
+                <span class="tag tag-lime">+¥5,940</span>
+              </div>
+              <div class="bess-stats">
+                <div><span>日循环</span><strong>0.64</strong><small>次</small></div>
+                <div><span>效率</span><strong>94.0</strong><small>%</small></div>
+                <div><span>寿命成本</span><strong>1,120</strong><small>元</small></div>
+                <div><span>末端 SOC</span><strong>49.2</strong><small>%</small></div>
+              </div>
+              <p class="bess-note">净收益 = 价差收益 − 效率损耗 − 寿命折损 − 运维费。价差收益不直接视为净收益。</p>
+            </div>
+          </aside>
+
+          <div class="panel gantt-panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">PROCESS GANTT · CONFLICT CHECK</div><h2>可调工序与原计划对照</h2></div>
+              <div class="gantt-legend">
+                <span class="legend-item"><i class="sw sw-lime"></i>优化窗口</span>
+                <span class="legend-item"><i class="sw sw-ghost"></i>原计划（只读）</span>
+              </div>
+            </div>
+            <div class="chart-wrap gantt-wrap" id="gantt-chart"></div>
+            <div class="panel-foot">
+              <span>仅 2# 轧机具备移峰授权；其余工序保持连续运行</span>
+              <span>甘特图由生产负责人确认的硬约束生成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel tier-panel reveal">
+          <div class="panel-head">
+            <div><div class="micro">PRICE TIERS · 96 SLOTS</div><h2>价格分层与 S4 响应</h2></div>
+            <span class="tag tag-neutral">预测值分层 · 非目录电价</span>
+          </div>
+          <div class="tier-band" id="tier-band" aria-hidden="true"></div>
+          <div class="tier-grid" id="tier-grid"></div>
+          <div class="panel-foot">
+            <span>阈值 ≤300 / 300–500 / 500–700 / &gt;700 元/MWh</span>
+            <span>分时统计仅用于分析，不替代正式峰谷目录电价与结算规则</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 05 DEVICES ================= -->
+      <section class="view" id="view-devices" aria-labelledby="devices-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>05 / DEVICE &amp; LINE OPS</div>
+            <h1 id="devices-title">设备与产线</h1>
+            <p class="lede">把生产设备、储能和计量点的现场状态接入决策链。系统只读采集，不越权控制 PLC、储能或安全联锁；异常会在方案审核和执行前被拦截。</p>
+          </div>
+          <div class="head-actions">
+            <button class="btn btn-ghost btn-sm" id="refresh-devices" type="button">刷新现场状态</button>
+            <button class="btn btn-quiet btn-sm" id="load-device-demo" type="button">载入设备演示</button>
+          </div>
+        </header>
+
+        <details class="panel reveal profile-settings" id="profile-settings">
+          <summary>企业与生产约束</summary>
+          <p class="device-note">先确认企业、计量点、购电口径和生产边界，再生成候选方案。保存参数会使已有草案重新进入版本校验。</p>
+          <form id="profile-form">
+            <div class="device-register-grid">
+              <label>企业名称<input name="name" required maxlength="120"></label>
+              <label>行业<input name="industry" maxlength="120" placeholder="例如装备制造"></label>
+              <label>购电方式<select name="purchaseMethod"><option value="待确认">待确认</option><option value="售电代理">售电代理</option><option value="直接交易">直接交易</option><option value="中长期合同+现货">中长期合同+现货</option><option value="演示售电代理">演示售电代理</option></select></label>
+              <label>分析费用口径<select name="settlementModel"><option value="spot_only">现货参考购电费</option><option value="fixed_contract_difference">固定合同差额 + 现货参考</option></select></label>
+              <label>计量点<input name="meter" required maxlength="100" placeholder="MP-1400127"></label>
+              <label>结算参考点<input name="settlementPoint" required maxlength="100"></label>
+              <label>并网功率上限（kW）<input name="gridLimitKw" type="number" min="1" step="0.01"></label>
+              <label>审核责任人<input name="reviewer" required maxlength="80"></label>
+              <label>规则来源 / 版本<input name="ruleReference" maxlength="240" placeholder="企业确认的规则文件或版本"></label>
+              <label>工序名称<input name="processName" maxlength="100"></label>
+              <label>工序功率（kW）<input name="processKw" type="number" min="0" step="0.01"></label>
+              <label>连续时长（小时）<input name="duration" type="number" min="1" max="24" step="1"></label>
+              <label>原计划开始小时<input name="baselineStart" type="number" min="0" max="23" step="1"></label>
+              <label>最早开始小时<input name="windowStart" type="number" min="0" max="23" step="1"></label>
+              <label>最晚完成小时<input name="windowEnd" type="number" min="1" max="24" step="1"></label>
+              <label>禁运行小时<input name="forbiddenHours" maxlength="100" placeholder="例如 12,13,22"></label>
+            </div>
+            <div class="profile-checks">
+              <label class="scope-confirm"><input name="ruleVerified" type="checkbox">购电与结算规则已确认</label>
+              <label class="scope-confirm"><input name="dataAuthorized" type="checkbox">企业数据使用已授权</label>
+              <label class="scope-confirm"><input name="constraintsConfirmed" type="checkbox">生产 / 设备约束已由负责人确认</label>
+              <label class="scope-confirm"><input name="storageEnabled" type="checkbox">启用储能</label>
+              <label class="scope-confirm"><input name="storageParametersConfirmed" type="checkbox">储能铭牌参数已复核</label>
+            </div>
+            <div class="device-register-grid storage-fields">
+              <label>储能容量（kWh）<input name="capacityKwh" type="number" min="0" step="0.01"></label>
+              <label>最大功率（kW）<input name="storagePowerKw" type="number" min="0" step="0.01"></label>
+              <label>初始 SOC（%）<input name="socInitial" type="number" min="0" max="100" step="0.1"></label>
+              <label>SOC 下限（%）<input name="socMin" type="number" min="0" max="100" step="0.1"></label>
+              <label>SOC 上限（%）<input name="socMax" type="number" min="0" max="100" step="0.1"></label>
+              <label>往返效率（%）<input name="roundtripEfficiency" type="number" min="1" max="100" step="0.1"></label>
+              <label>寿命折损（元/kWh）<input name="degradationYuanKwh" type="number" min="0" step="0.001"></label>
+              <label>日运维费（元）<input name="maintenanceYuanDay" type="number" min="0" step="0.01"></label>
+            </div>
+            <label class="profile-tasks-label">多工序任务 JSON（可选，最多 8 道；不填则保留当前任务）<textarea name="tasksJson" rows="4" placeholder='[{"id":"heat","name":"热处理","line":"流水线A","equipmentId":"FURNACE-01","powerKw":120,"duration":3,"baselineStart":10,"windowStart":8,"windowEnd":23,"forbiddenHours":[],"predecessors":[]}]'></textarea></label>
+            <div class="device-register-actions"><button class="btn btn-primary btn-sm" type="submit">保存参数并重新计算</button><span class="device-note" id="profile-save-result" role="status"></span></div>
+          </form>
+        </details>
+
+        <div class="device-kpi-row reveal" id="device-summary">
+          <div class="device-kpi"><span>已登记设备</span><strong>—</strong><small>等待同步</small></div>
+          <div class="device-kpi"><span>在线设备</span><strong>—</strong><small>有效遥测</small></div>
+          <div class="device-kpi"><span>需要处理</span><strong>—</strong><small>过期 / 越限 / 故障</small></div>
+          <div class="device-kpi"><span>数据性质</span><strong>—</strong><small>真实设备与演示设备分开</small></div>
+        </div>
+
+        <div class="device-grid" id="device-list">
+          <article class="panel device-empty">尚未同步设备台账。可刷新现场状态，或在空的企业空间载入明确标识的合成设备。</article>
+        </div>
+
+        <div class="panel reveal device-detail-panel">
+          <div class="panel-head">
+            <div><div class="micro">READ-ONLY TELEMETRY</div><h2>遥测历史与数据批次</h2></div>
+            <label class="device-select-wrap">设备<select id="device-select"><option value="">暂无设备</option></select></label>
+          </div>
+          <p class="device-note" id="device-detail-note">选择设备后查看最近观测。质量码、采集时间、来源批次和原始摘要都保留在系统中。</p>
+          <div class="table-wrap"><table class="data-table device-telemetry-table" id="device-telemetry-table"><tbody><tr><td>暂无遥测数据</td></tr></tbody></table></div>
+        </div>
+
+        <div class="panel reveal device-boundary-panel">
+          <div class="panel-head"><div><div class="micro">FIELD INTEGRATION BOUNDARY</div><h2>现场接入边界</h2></div><span class="tag tag-neutral">首期只读</span></div>
+          <div class="device-boundary-grid">
+            <div><strong>可接入</strong><p>智能电表、储能 BMS、PLC 状态点、MES 生产计划、SCADA 只读遥测和边缘网关。</p></div>
+            <div><strong>先校验</strong><p>设备编号、计量点、时间戳时区、质量码、额定功率、SOC 上下限和维护窗口。</p></div>
+            <div><strong>不自动执行</strong><p>市场申报、PLC 写入、储能充放电控制和安全联锁仍由企业授权系统负责。</p></div>
+          </div>
+          <div class="panel-foot"><span>真实设备需先配置网关凭据和只读权限</span><span>演示数据不进入企业收益验收</span></div>
+        </div>
+
+        <details class="panel reveal device-register-panel" id="device-register-panel">
+          <summary>登记现场设备台账</summary>
+          <form id="device-register-form" class="device-register-form">
+            <div class="device-register-grid">
+              <label>设备 ID<input name="deviceId" required pattern="[A-Za-z0-9_.:-]{1,60}" placeholder="例如 METER-001"></label>
+              <label>设备名称<input name="name" required maxlength="100" placeholder="车间总进线电表"></label>
+              <label>类型<select name="kind"><option value="METER">智能电表</option><option value="PLC">PLC 状态点</option><option value="STORAGE">储能 BMS</option></select></label>
+              <label>产线 / 车间<input name="line" maxlength="100" placeholder="流水线 A"></label>
+              <label>设备编号<input name="equipmentId" maxlength="100" placeholder="现场资产编号"></label>
+              <label>数据来源<input name="source" maxlength="200" placeholder="边缘网关 / MES / SCADA"></label>
+              <label>额定功率（kW）<input name="ratedPowerKw" type="number" min="0.001" step="0.01" value="200"></label>
+              <label>遥测过期阈值（秒）<input name="staleSeconds" type="number" min="30" step="1" value="300"></label>
+            </div>
+            <div class="device-register-actions">
+              <label class="scope-confirm"><input name="enabled" type="checkbox" checked>启用采集</label>
+              <label class="scope-confirm"><input name="enforce" type="checkbox">异常时阻断审核 / 执行</label>
+              <button class="btn btn-primary btn-sm" type="submit">保存设备台账</button>
+            </div>
+            <p class="device-note">真实设备保存后，再由管理员生成一次性网关凭据。系统只接受该设备自己的遥测，不提供控制下发。</p>
+          </form>
+        </details>
+      </section>
+
+      <!-- ================= 06 LONG-TERM ================= -->
+      <section class="view" id="view-longterm" aria-labelledby="lt-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>05 / LONG-TERM PLANNING</div>
+            <h1 id="lt-title">长期边界与投资情景</h1>
+            <p class="lede">年度确定预算与风险边界，季度确定合同与检修安排，月度确定需量与用电计划；日前排程只能在边界内调整。长期不替代日内调度，单日模拟也不得代替年度投资结论。</p>
+          </div>
+          <div class="head-actions">
+            <span class="tag tag-neutral">FY2026 · 12 个月滚动</span>
+            <span class="tag tag-warn">H1 合同覆盖低于目标</span>
+          </div>
+        </header>
+
+        <div class="kpi-row reveal">
+          <div class="kpi">
+            <div class="micro">年度用电预算</div>
+            <div class="kpi-num"><span>5,171</span><small>万元</small></div>
+            <div class="kpi-sub">滚动 12 个月 · 不含未确认费用</div>
+          </div>
+          <div class="kpi">
+            <div class="micro">年度合同覆盖率</div>
+            <div class="kpi-num"><span>67.3</span><small>%</small></div>
+            <div class="kpi-sub"><span class="warn">低于 70% 目标</span> · H1 65.3%</div>
+          </div>
+          <div class="kpi">
+            <div class="micro">年度现货敞口</div>
+            <div class="kpi-num"><span>32.7</span><small>%</small></div>
+            <div class="kpi-sub"><span class="warn">上限 30%</span> · 超限 2.7 pp</div>
+          </div>
+          <div class="kpi">
+            <div class="micro">最大需量边界</div>
+            <div class="kpi-num"><span>74</span><small>MW</small></div>
+            <div class="kpi-sub">S4 峰值 70.3 MW · 余量 3.7 MW</div>
+          </div>
+        </div>
+
+        <div class="lt-grid">
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">COVERAGE CORRIDOR · FY2026</div><h2>合同覆盖走廊</h2></div>
+              <span class="tag tag-lime">Q3 达标</span>
+            </div>
+            <div class="chart-legend">
+              <span class="legend-item"><i class="sw sw-steel"></i>合同覆盖率</span>
+              <span class="legend-item"><i class="sw" style="background:rgba(242,176,74,.45)"></i>现货敞口</span>
+              <span class="legend-item"><i class="sw sw-lime"></i>目标 ≥ 70% / 走廊 68–72%</span>
+            </div>
+            <div class="chart-wrap" id="lt-chart">
+              <div class="chart-tip" id="lt-tip" hidden></div>
+            </div>
+            <div class="panel-foot">
+              <span>柱下数字为月度预算（万元）· 悬停查看峰值需量</span>
+              <span>覆盖率低于目标的月份以琥珀色边界标记</span>
+            </div>
+          </div>
+
+          <aside class="side-stack">
+            <div class="panel reveal">
+              <div class="panel-head compact">
+                <div><div class="micro">SHORT → LONG LINKAGE</div><h2>短期方案边界检查</h2></div>
+                <span class="tag tag-lime">通过</span>
+              </div>
+              <ul class="boundary-list">
+                <li><span>合同覆盖率</span><b>67.3%</b><small>不变</small><i class="ok">未突破</i></li>
+                <li><span>年度预算</span><b>5,171 万</b><small>单日不进入年度结论</small><i class="ok">边界内</i></li>
+                <li><span>最大需量</span><b>70.3 / 74 MW</b><small>余量 3.7 MW</small><i class="ok">通过</i></li>
+                <li><span>储能寿命</span><b>0.64 次/日</b><small>月度 412 / 450</small><i class="ok">边界内</i></li>
+              </ul>
+              <div class="linkage-note">S4 未突破合同覆盖率、预算、需量或储能寿命边界 → <strong>可执行</strong>。若突破任一长期边界，系统提示“短期成本下降但长期风险上升”。</div>
+            </div>
+
+            <div class="panel reveal">
+              <div class="panel-head compact"><div><div class="micro">DECISION RULE</div><h2>长期口径</h2></div></div>
+              <ul class="rule-list">
+                <li><span>01</span>年度预算与风险边界约束季度合同与检修安排</li>
+                <li><span>02</span>月度需量与用电计划约束日前可调工序和储能</li>
+                <li><span>03</span>长期与短期共用数据版本、费用模型与审计记录</li>
+                <li><span>04</span>单日模拟差额不得外推为年度节省或投资回报</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+
+        <div class="lt-lower">
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">QUARTERLY ROLL · 2026</div><h2>季度滚动边界</h2></div>
+              <span class="unit-note">预算单位：万元</span>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table lt-table" id="quarter-table"></table>
+            </div>
+            <div class="panel-foot">
+              <span>年度预算合计 5,171 万元</span>
+              <span>仅 Q3 合同覆盖率达到 70% 目标</span>
+            </div>
+          </div>
+
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">INVESTMENT SCENARIOS</div><h2>投资与采购情景</h2></div>
+              <span class="unit-note">未纳入预算审批</span>
+            </div>
+            <div class="invest-list" id="invest-list"></div>
+            <div class="panel-foot"><span>静态测算 · 未计融资成本</span><span>价格与需求变化需重估</span></div>
+          </div>
+        </div>
+
+        <div class="principles reveal" aria-label="长期口径">
+          <span>单日模拟 ≠ 年度投资结论</span><i></i><span>长期给短期设置可执行范围</span><i></i><span>短期结果不得覆盖长期边界</span>
+        </div>
+      </section>
+
+      <!-- ================= 05 ALERTS ================= -->
+      <section class="view" id="view-alerts" aria-labelledby="alt-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>06 / ALERT CENTER</div>
+            <h1 id="alt-title">预警中心</h1>
+            <p class="lede">数据质量、价格、负荷、合同、储能与版本状态统一转为可处理任务。阻断级预警禁止方案批准或执行，安全优先于成本。</p>
+          </div>
+          <div class="head-actions">
+            <span class="tag tag-danger"><i class="dot-sq"></i>1 阻断</span>
+            <span class="tag tag-warn">2 重要</span>
+            <span class="tag tag-neutral">规则版本 R-2026.09</span>
+          </div>
+        </header>
+
+        <div class="filter-row reveal">
+          <div class="seg" id="alert-level-filter" role="group" aria-label="按级别筛选">
+            <button class="seg-btn active" data-level="all">全部 <span class="seg-count">7</span></button>
+            <button class="seg-btn" data-level="block">阻断 <span class="seg-count">1</span></button>
+            <button class="seg-btn" data-level="important">重要 <span class="seg-count">2</span></button>
+            <button class="seg-btn" data-level="general">一般 <span class="seg-count">2</span></button>
+            <button class="seg-btn" data-level="hint">提示 <span class="seg-count">2</span></button>
+          </div>
+          <div class="filter-right">
+            <label class="select-wrap"><span>类型</span>
+              <select id="alert-type">
+                <option value="all">全部类型</option>
+                <option value="数据质量">数据质量</option>
+                <option value="价格风险">价格风险</option>
+                <option value="负荷与生产">负荷与生产</option>
+                <option value="合同与费用">合同与费用</option>
+                <option value="储能与安全">储能与安全</option>
+                <option value="方案状态">方案状态</option>
+              </select>
+            </label>
+            <label class="select-wrap"><span>状态</span>
+              <select id="alert-status">
+                <option value="all">全部状态</option>
+                <option value="待处理">待处理</option>
+                <option value="待确认">待确认</option>
+                <option value="处理中">处理中</option>
+                <option value="已解决">已解决</option>
+                <option value="已忽略">已忽略</option>
+              </select>
+            </label>
+            <input class="search" id="alert-search" type="search" placeholder="搜索编号 / 字段 / 批次">
+          </div>
+        </div>
+
+        <div class="alerts-grid">
+          <div class="alert-list reveal" id="alert-list"></div>
+          <aside class="side-stack">
+            <div class="panel reveal">
+              <div class="panel-head compact"><div><div class="micro">TODAY · 2026-03-04</div><h2>处理态势</h2></div></div>
+              <div class="alert-stats" id="alert-stats"></div>
+              <div class="panel-foot"><span>关闭前再次校验条件是否解除</span><span>误报须填写原因</span></div>
+            </div>
+            <div class="panel reveal">
+              <div class="panel-head compact"><div><div class="micro">ESCALATION</div><h2>阻断联动</h2></div></div>
+              <ul class="rule-list">
+                <li><span>01</span>阻断预警阻止方案批准与执行前复核</li>
+                <li><span>02</span>旧版本失效提示重新计算或重新审核</li>
+                <li><span>03</span>安全预警优先于成本优化建议</li>
+                <li><span>04</span>同类条件 30 分钟内合并，避免通知泛滥</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ================= 05 DATA ================= -->
+      <section class="view" id="view-data" aria-labelledby="data-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>07 / DATA &amp; LEDGER</div>
+            <h1 id="data-title">导入数据</h1>
+            <p class="lede">上传企业分时用电 CSV，系统自动检查时间、单位和缺失项；通过后才能进入预测和成本方案。账单核对放在下方“账单核对”标签中。</p>
+          </div>
+          <div class="head-actions">
+            <span class="tag tag-neutral">账期 2026-02</span>
+            <span class="tag tag-warn">核验中</span>
+            <button class="btn btn-ghost btn-sm" id="import-btn">上传 CSV</button>
+            <button class="btn btn-quiet btn-sm" id="demo-btn">加载演示</button>
+          </div>
+        </header>
+
+        <section class="import-quick reveal"><div><div class="micro">CSV IMPORT GUIDE</div><h2>一份 CSV 就能开始</h2><p>必填三列：<code>timestamp</code>、<code>price_yuan_mwh</code>、<code>load_kw</code>。文件使用 UTF-8 编码；可上传 60 分钟数据，或每小时完整的 15 分钟数据。</p></div><div class="import-quick-steps"><span><b>1</b>下载模板</span><span><b>2</b>填写数据</span><span><b>3</b>上传检查</span></div><div class="button-row"><button class="btn btn-primary btn-sm" type="button" data-open-import>上传 CSV</button><button class="btn btn-quiet btn-sm" type="button" data-template-download>下载模板</button><button class="btn btn-quiet btn-sm" type="button" data-load-demo>用演示数据试运行</button></div></section>
+
+        <div class="tabs reveal" role="tablist">
+          <button class="tab active" data-tab="catalog" role="tab" aria-selected="true">数据目录</button>
+          <button class="tab" data-tab="quality" role="tab" aria-selected="false">质量检查</button>
+          <button class="tab" data-tab="billing" role="tab" aria-selected="false">账单核对</button>
+        </div>
+
+        <details class="panel reveal import-metadata-panel">
+          <summary>高级导入设置（可选）</summary><div class="panel-head compact"><div><div class="micro">IMPORT CONTEXT</div><h2>补充来源、计量点与时间范围</h2></div><span class="unit-note">不填将使用默认口径</span></div>
+          <div class="import-metadata-grid">
+            <label>数据来源<input id="import-source" value="企业能源 / 计量系统" maxlength="200"></label>
+            <label>计量点<input id="import-meter" maxlength="100" placeholder="自动使用企业计量点"></label>
+            <label>授权范围<input id="import-authorization" value="企业已授权分析使用" maxlength="240"></label>
+            <label>数据粒度<select id="import-interval"><option value="auto">自动识别</option><option value="60">60 分钟</option><option value="15">15 分钟</option></select></label>
+            <label>有效期开始<input id="import-valid-from" type="date"></label>
+            <label>有效期结束<input id="import-valid-to" type="date"></label>
+            <label>时区<select id="import-timezone"><option value="Asia/Shanghai">Asia/Shanghai（北京时间）</option></select></label>
+            <label>价格 / 负荷单位<span class="import-unit-lock">元/MWh · kW（系统不猜测单位）</span></label>
+          </div>
+          <p class="device-note">15 分钟文件必须每小时包含 00、15、30、45 四段；系统按电量和成本守恒聚合到小时，不完整批次整体隔离。原始文件、映射版本和质量问题仍可追溯。</p>
+        </details>
+
+        <div class="tabpane active" data-pane="catalog">
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">CATALOG · BATCH LEVEL</div><h2>可追溯数据目录</h2></div>
+              <span class="unit-note">每条批次保存原始文件、字段映射、单位、时区与指纹</span>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table catalog-table" id="batch-table"></table>
+            </div>
+            <div class="panel-foot"><span>错误批次整体隔离，不部分写入</span><span>日级公开汇总不得冒充小时价格</span></div>
+          </div>
+        </div>
+
+        <div class="tabpane" data-pane="quality">
+          <div class="quality-summary reveal" id="quality-summary"></div>
+          <div class="quality-grid">
+            <div class="panel reveal">
+              <div class="panel-head">
+                <div><div class="micro">QUALITY ISSUES · 05</div><h2>异常与处理记录</h2></div>
+                <span class="tag tag-warn">2 项未关闭</span>
+              </div>
+              <ul class="issue-list" id="issue-list"></ul>
+              <div class="panel-foot"><span>保留原始值、规则、修正值与原因</span><span>异常批次不进入优化</span></div>
+            </div>
+            <div class="panel reveal">
+              <div class="panel-head"><div><div class="micro">VALUE SEMANTICS</div><h2>空值语义</h2></div></div>
+              <div class="state-legend">
+                <div><span class="state state-0">0</span><strong>已确认的零</strong><p>企业确认该时段用电为零，可参与计算。</p></div>
+                <div><span class="state state-null">—</span><strong>未知 / 缺失</strong><p>保持为空，列出缺失字段与补录入口。</p></div>
+                <div><span class="state state-na">N/A</span><strong>不适用</strong><p>该方案或设备不存在该项，不按 0 处理。</p></div>
+                <div><span class="state state-bad">×</span><strong>约束不可行</strong><p>展示冲突约束与影响工序，不生成成本。</p></div>
+              </div>
+              <div class="rules-inline">前端禁止把空值转换为 0；金额为空、未知与“不适用”必须分别呈现。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabpane" data-pane="billing">
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">BILL RECONCILIATION · 2026-02</div><h2>账期费用逐项复算</h2></div>
+              <div class="bill-meta">
+                <span>计量点 MP-1400127</span>
+                <span>容差 ±0.5% 或 ±¥800</span>
+                <span class="tag tag-warn">核验中</span>
+                <button class="btn btn-quiet btn-sm" id="confirm-bill-btn" type="button" hidden>确认账单口径</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table billing-table" id="billing-table"></table>
+            </div>
+            <div class="actual-save">
+              <div>
+                <div class="micro">ACTUAL SAVING</div>
+                <div class="save-state"><span class="save-null" id="actual-saving">—</span><span class="tag tag-danger">未核验 · 保持为空</span></div>
+              </div>
+              <p>正式账单仍有 <strong>1</strong> 项费用未录入、反事实基准未确认。actualSaving 保持为空，不登记为 0，也不计入经营报告。</p>
+            </div>
+            <div class="verification-box" id="saving-verification-box" hidden>
+              <div class="micro">ACTUAL SAVING VERIFICATION</div>
+              <h3>实际节省核验</h3>
+              <p>执行登记只记录事实，不代表节省。请由财务或其他授权人员选择已批准方案、已确认账单，并提交 24 小时实际曲线和反事实依据。</p>
+              <div class="verification-grid">
+                <label>执行方案<select id="verify-plan-select"></select></label>
+                <label>正式账单<select id="verify-bill-select"></select></label>
+              </div>
+              <label>反事实基准依据<textarea id="baseline-evidence" rows="2" placeholder="例如：批准方案 V-12 的原计划工序和储能空闲基准，经生产负责人确认"></textarea></label>
+              <label>实际计量来源<textarea id="meter-evidence" rows="2" placeholder="例如：智能电表 DEMO-001，导出时间、文件名或数据批次编号"></textarea></label>
+              <label>排除因素<textarea id="excluded-factors" rows="2" placeholder="例如：当日无停产、无临时检修；输配电和税费未纳入本次口径"></textarea></label>
+              <label>24 小时实际曲线（CSV）<textarea id="actual-curve-csv" rows="6" placeholder="hour,gridKw,baselineGridKw,price,chargeKw,dischargeKw,contractKwh,contractPrice&#10;0,,,,,,,"></textarea></label>
+              <div class="verification-actions">
+                <button class="btn btn-quiet btn-sm" id="curve-template-btn" type="button">生成空白 24 小时模板</button>
+                <label class="scope-confirm"><input id="scope-confirmed" type="checkbox"> 我确认账单范围、实际曲线与排除因素已由企业人员复核</label>
+                <button class="btn btn-primary btn-sm" id="verify-saving-btn" type="button">提交实际节省核验</button>
+              </div>
+              <p class="verification-result" id="verification-result" role="status"></p>
+            </div>
+            <div class="panel-foot"><span>核算金额 ≠ 实际节省</span><span>差异可追溯至原始字段与规则版本</span></div>
+          </div>
+
+          <div class="panel reveal bill-note-panel">
+            <div class="panel-head"><div><div class="micro">SCOPE</div><h2>当前未覆盖的费用</h2></div></div>
+            <div class="chip-row">
+              <span class="tag tag-neutral">偏差考核</span>
+              <span class="tag tag-neutral">峰谷电价</span>
+              <span class="tag tag-neutral">节点 / 结算参考点</span>
+              <span class="tag tag-neutral">政府性基金明细</span>
+              <span class="tag tag-neutral">税费</span>
+            </div>
+            <p class="muted-note">未覆盖费用显示为“数据不足”，不隐含为 0。补充结算规则版本后重新复算，不覆盖本账期已确认结果。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 06 EXPLAIN ================= -->
+      <section class="view" id="view-explain" aria-labelledby="exp-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>08 / EXPLAINABLE AI</div>
+            <h1 id="exp-title">策略解释与证据</h1>
+            <p class="lede">金额与约束先由计算服务确定，再由语言模型组织解释。每个回答绑定方案版本、数据批次、字段与计算编号，未重算时只讲影响方向。</p>
+          </div>
+          <div class="head-actions">
+            <span class="tag tag-neutral">绑定 V-S4-003</span>
+            <span class="tag tag-lime">证据可追溯</span>
+          </div>
+        </header>
+
+        <div class="ai-grid">
+          <div class="panel chat-panel reveal">
+            <div class="chat-head">
+              <div class="ai-mark" aria-hidden="true"><span></span></div>
+              <div>
+                <strong>源衡智控 · 方案解释器</strong>
+                <small>仅访问本企业授权数据 · 不执行审批与设备控制</small>
+              </div>
+              <span class="tag tag-neutral">MODEL v2.4 · 审计开启</span>
+            </div>
+            <div class="chat-stream" id="chat-stream" aria-live="polite"></div>
+            <div class="chat-suggest" id="chat-suggest"></div>
+            <form class="composer" id="chat-form">
+              <input id="chat-input" type="text" placeholder="问：为什么把 2# 轧机安排在 12:30？" autocomplete="off">
+              <button type="submit" class="btn btn-primary btn-sm">发送</button>
+            </form>
+            <div class="chat-foot">AI 不能批准方案、不能控制设备；所有精确金额来自计算服务。</div>
+          </div>
+
+          <aside class="side-stack">
+            <div class="panel reveal">
+              <div class="panel-head compact"><div><div class="micro">ANSWER CONTRACT</div><h2>解释约束</h2></div></div>
+              <ul class="rule-list">
+                <li><span>01</span>先检索方案版本的结构化证据</li>
+                <li><span>02</span>金额、差额、约束由计算服务返回</li>
+                <li><span>03</span>未重算时仅说明影响方向与缺失原因</li>
+                <li><span>04</span>回答保存引用证据与访问日志</li>
+              </ul>
+            </div>
+            <div class="panel reveal">
+              <div class="panel-head compact"><div><div class="micro">EVIDENCE INDEX</div><h2>证据索引</h2></div></div>
+              <div class="evidence-index" id="evidence-index"></div>
+              <div class="panel-foot"><span>点击查看字段路径、原值与版本</span></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ================= 07 REVIEW ================= -->
+      <section class="view" id="view-review" aria-labelledby="rev-title">
+        <header class="view-head reveal">
+          <div>
+            <div class="eyebrow"><span class="sq"></span>09 / REVIEW &amp; VERSIONS</div>
+            <h1 id="rev-title">版本审核</h1>
+            <p class="lede">参数修改生成子版本，保存父版本、差异、输入指纹与审核意见。提交人与批准人分离；批准的是明确版本，不是通用授权。</p>
+          </div>
+          <div class="head-actions">
+            <span class="tag tag-neutral">当前 V-S4-003</span>
+            <span class="tag tag-warn" id="review-status-tag">审核中</span>
+          </div>
+        </header>
+
+        <div class="review-grid">
+          <div class="panel version-panel reveal">
+            <div class="panel-head compact"><div><div class="micro">VERSION TREE</div><h2>方案版本树</h2></div></div>
+            <div class="version-tree" id="version-tree"></div>
+          </div>
+
+          <div class="panel reveal">
+            <div class="panel-head">
+              <div><div class="micro">V-S4-003 · DIFF</div><h2>参数差异与结果快照</h2></div>
+              <span class="tag tag-lime">独立求解</span>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table diff-table" id="diff-table"></table>
+            </div>
+            <div class="panel-foot">
+              <span>父版本 V-S4-002 · 输入指纹 b71c…9a04</span>
+              <span>计算编号 CALC-0304-0921</span>
+            </div>
+          </div>
+
+          <aside class="side-stack">
+            <div class="panel reveal">
+              <div class="panel-head compact"><div><div class="micro">APPROVAL FLOW</div><h2>审核流程</h2></div></div>
+              <ol class="flow" id="approval-flow">
+                <li class="done"><i></i><div><strong>草稿</strong><small>03-04 09:18</small></div></li>
+                <li class="done"><i></i><div><strong>提交审核</strong><small>陈宏 · 09:20</small></div></li>
+                <li class="current"><i></i><div><strong>审核中</strong><small>待 李杰男 决策</small></div></li>
+                <li><i></i><div><strong>批准</strong><small>需填写意见</small></div></li>
+                <li><i></i><div><strong>执行前复核</strong><small>批准后开启</small></div></li>
+              </ol>
+              <div class="review-actions" id="review-actions">
+                <button class="btn btn-primary" id="btn-approve">批准 V-S4-003</button>
+                <button class="btn btn-ghost" id="btn-return">退回修改</button>
+                <button class="btn btn-quiet" id="btn-reject">驳回</button>
+              </div>
+              <div class="execute-box" id="execute-box" hidden>
+                <div class="micro">EXECUTION REGISTER</div>
+                <p>批准版本只能登记实际执行结果，不能用模拟成本替代现场计量。</p>
+                <label>实际执行电量（kWh）<input id="actual-kwh" type="number" min="0" step="0.01" placeholder="填写电表汇总值"></label>
+                <label>执行说明与计量来源<textarea id="execution-note" rows="2" placeholder="例如：智能电表 MP-1400127，执行后导出日结算曲线"></textarea></label>
+                <button class="btn btn-primary btn-sm" id="execute-plan-btn" type="button">登记实际执行</button>
+              </div>
+              <div class="review-identity">
+                <span class="dot live"></span><span id="review-identity-text">当前身份：正在读取</span>
+              </div>
+              <div class="team-box" id="team-box">
+                <div class="micro">TEAM ROLE</div>
+                <p id="team-role-text">正在读取当前企业角色…</p>
+                <div class="team-row" id="team-invite-row">
+                  <select id="invite-role" aria-label="邀请角色"><option value="APPROVER">批准人</option><option value="FINANCE">财务核验人</option><option value="ANALYST">分析人员</option><option value="PRODUCTION">生产负责人</option><option value="DEVICE">设备负责人</option><option value="VIEWER">只读成员</option></select>
+                  <button class="btn btn-quiet btn-sm" id="invite-member-btn" type="button">生成邀请码</button>
+                </div>
+                <div class="team-row">
+                  <input id="join-code" type="text" placeholder="粘贴企业邀请码" aria-label="企业邀请码">
+                  <button class="btn btn-ghost btn-sm" id="join-workspace-btn" type="button">加入企业</button>
+                </div>
+                <p class="team-result" id="team-result" role="status"></p>
+              </div>
+            </div>
+            <div class="panel reveal">
+              <div class="panel-head compact"><div><div class="micro">AUDIT TRAIL</div><h2>审计记录</h2></div></div>
+              <ul class="audit-list" id="audit-list"></ul>
+            </div>
+          </aside>
+        </div>
+
+        <div class="rules-note reveal">
+          <div class="micro">APPROVAL RULES</div>
+          <p>提交人不能审批自己的方案；修改批准参数必须重新审核；同一版本并发审核只允许一次有效状态变更；驳回终止当前版本，退回修改生成子版本；旧版本保持只读。</p>
+        </div>
+      </section>
+
+      <section class="view" id="view-governance" aria-labelledby="gov-title">
+        <header class="view-head reveal">
+          <div><div class="micro">DATA GOVERNANCE · PLATFORM CONTROL</div><h1 id="gov-title">数据治理与平台运维</h1><p class="lede">把数据目录、指标口径、接口质量、生命周期和安全审计集中到一页，方便管理员快速判断数据是否可用。</p></div>
+          <div class="head-actions"><span class="tag tag-ok">治理状态：可运行</span><button class="btn btn-primary btn-sm" type="button" data-gov-action="new-asset">登记数据资产</button></div>
+        </header>
+        <section class="gov-toolbar panel reveal"><div class="gov-search"><label for="gov-search">全局治理搜索</label><input id="gov-search" type="search" placeholder="搜索数据资产、指标、接口或责任人"></div><div class="gov-tabs" role="tablist"><button class="active" data-gov-tab="catalog" type="button">资产目录</button><button data-gov-tab="quality" type="button">质量与接口</button><button data-gov-tab="security" type="button">安全与运维</button></div></section>
+        <div class="gov-kpis reveal"><article><span>数据资产</span><strong id="gov-assets">—</strong><small>已登记 / 可用</small></article><article><span>统一指标</span><strong id="gov-metrics">—</strong><small>含口径与责任人</small></article><article><span>数据质量评分</span><strong id="gov-quality">—</strong><small>完整性 · 及时性 · 一致性</small></article><article><span>接口健康度</span><strong id="gov-interfaces">—</strong><small>成功率 / 延迟</small></article><article><span>待处理工单</span><strong id="gov-tickets">—</strong><small>质量与安全问题</small></article></div>
+        <div class="gov-content reveal">
+          <section class="panel gov-panel" data-gov-pane="catalog"><div class="panel-head compact"><div><div class="micro">ASSET CATALOG</div><h2>能源数据目录</h2></div><span class="tag tag-info">元数据已登记</span></div><div class="gov-table-wrap"><table class="data-table" id="gov-catalog-table"></table></div><div class="panel-foot"><span>数据分层：ODS → DWD → DWS → ADS</span><span>生命周期：采集 · 使用 · 归档</span></div></section>
+          <section class="panel gov-panel" data-gov-pane="catalog"><div class="panel-head compact"><div><div class="micro">METRIC SYSTEM</div><h2>统一指标体系</h2></div><button class="btn btn-quiet btn-sm" type="button" data-gov-action="metric">维护指标口径</button></div><div class="gov-metric-grid" id="gov-metric-grid"></div></section>
+          <section class="panel gov-panel" data-gov-pane="quality" hidden><div class="panel-head compact"><div><div class="micro">QUALITY & API</div><h2>质量与接口状态</h2></div><span class="tag tag-warn" id="gov-quality-status">监测中</span></div><div class="gov-health-grid" id="gov-health-grid"></div><div class="gov-table-wrap"><table class="data-table" id="gov-quality-table"></table></div></section>
+          <section class="panel gov-panel" data-gov-pane="security" hidden><div class="panel-head compact"><div><div class="micro">SECURITY & OPS</div><h2>安全审计与运行保障</h2></div><span class="tag tag-ok">最小权限</span></div><div class="gov-security-grid" id="gov-security-grid"></div><div class="gov-audit-list" id="gov-audit-list"></div></section>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="page-foot">
+      <span>源衡智控 · 工业企业源网荷储智能优化平台</span>
+      <span>模拟成本不等于实际节省 · 正式购电与调度由企业授权人员确认</span>
+    </footer>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="详情面板">
+  <div class="drawer-head">
+    <div><div class="micro" id="drawer-kicker">DETAIL</div><h2 id="drawer-title">详情</h2></div>
+    <button class="icon-btn" id="drawer-close" aria-label="关闭面板">✕</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</aside>
+
+<div class="modal-wrap" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <div><div class="micro" id="modal-kicker">ACTION</div><h3 id="modal-title">确认操作</h3></div>
+      <button class="icon-btn" id="modal-close" aria-label="关闭">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot" id="modal-foot"></div>
+  </div>
+</div>
+
+<div class="palette-wrap" id="palette" hidden>
+  <div class="palette" role="dialog" aria-modal="true" aria-label="指令台">
+    <div class="palette-top">
+      <div class="micro">COMMAND CONSOLE · 指令台</div>
+      <span class="palette-esc">ESC</span>
+    </div>
+    <div class="palette-search">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="palette-input" type="text" placeholder="搜索视图、方案、预警、证据、数据批次…" autocomplete="off" spellcheck="false" aria-label="搜索指令">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="palette-results" id="palette-results" role="listbox" aria-label="指令结果"></div>
+    <div class="palette-bottom">
+      <span><kbd>↑</kbd><kbd>↓</kbd>选择</span>
+      <span><kbd>↵</kbd>执行</span>
+      <span><kbd>ESC</kbd>关闭</span>
+      <span class="palette-context">V-S4-003 · B-20260303-MKT-02</span>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
+<noscript><div class="noscript">该原型需要启用 JavaScript 才能查看图表与交互。</div></noscript>
+
+<script src="js/data.js" defer></script>
+<script src="js/charts.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/live.js" defer></script>
+<script src="js/auth-bg.js" defer></script>
+<script src="js/operations.js" defer></script>
+<script src="js/assistant-adapter.js" defer></script>
+<script src="js/assistant.js" defer></script>
+</body>
+</html>

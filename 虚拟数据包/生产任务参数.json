@@ -1,0 +1,54 @@
+[
+  {
+    "id": "t1",
+    "name": "熔炼/粗加工",
+    "line": "流水线A",
+    "equipmentId": "EQ-A1",
+    "orderNo": "ORD-20261104-01",
+    "quantity": 120,
+    "quantityUnit": "件",
+    "powerKw": 130,
+    "duration": 3,
+    "baselineStart": 8,
+    "windowStart": 6,
+    "windowEnd": 15,
+    "forbiddenHours": [],
+    "predecessors": []
+  },
+  {
+    "id": "t2",
+    "name": "精加工",
+    "line": "流水线A",
+    "equipmentId": "EQ-A2",
+    "orderNo": "ORD-20261104-01",
+    "quantity": 120,
+    "quantityUnit": "件",
+    "powerKw": 90,
+    "duration": 4,
+    "baselineStart": 13,
+    "windowStart": 10,
+    "windowEnd": 20,
+    "forbiddenHours": [],
+    "predecessors": [
+      "t1"
+    ]
+  },
+  {
+    "id": "t3",
+    "name": "包装与质检",
+    "line": "流水线A",
+    "equipmentId": "EQ-A3",
+    "orderNo": "ORD-20261104-01",
+    "quantity": 120,
+    "quantityUnit": "件",
+    "powerKw": 55,
+    "duration": 2,
+    "baselineStart": 17,
+    "windowStart": 15,
+    "windowEnd": 22,
+    "forbiddenHours": [],
+    "predecessors": [
+      "t2"
+    ]
+  }
+]

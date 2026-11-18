@@ -1,0 +1,25 @@
+{
+  "name": "Apache ECharts",
+  "version": "5.6.0",
+  "upstream": "https://github.com/apache/echarts/tree/5.6.0",
+  "registry": "https://registry.npmjs.org/echarts/5.6.0",
+  "tarball": "https://registry.npmjs.org/echarts/-/echarts-5.6.0.tgz",
+  "integrity": "sha512-oTbVTsXfKuEhxftHqL5xprgLoc0k7uScAwtryCgWF6hPYFLRwOUHiFmHGCBKP5NPFNkDVopOieyUqYGH8Fa3kA==",
+  "files": {
+    "echarts.min.js": {
+      "packagePath": "package/dist/echarts.min.js",
+      "sha256": "bf4a223524e40b77c304bec67e1222cf551f14880cf42c69dc046558e11c07b1",
+      "bytes": 1034102
+    },
+    "LICENSE": {
+      "packagePath": "package/LICENSE",
+      "sha256": "634293835b43a6dd2094fa39182a3d9a6b9ca43b7fdb9ac354e8037af2a3093a",
+      "bytes": 11990
+    },
+    "NOTICE": {
+      "packagePath": "package/NOTICE",
+      "sha256": "fa99ac3af859d0e13166906dc53a73ad34a08898da7e8ae83407275496e9e30c",
+      "bytes": 168
+    }
+  }
+}
